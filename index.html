@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satpel Gizi Kecamatan Medan Johor</title>
+    
+    <!-- Menggunakan Tailwind CSS untuk desain profesional dan responsif -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Menggunakan Lucide Icons untuk ikon-ikon yang menarik -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Konfigurasi warna kustom Tailwind (Opsional) -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1d4ed8', // Biru profesional
+                        secondary: '#f8fafc',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Efek bayangan saat kartu disentuh/hover */
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            border-color: #bfdbfe;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- BAGIAN HEADER -->
+    <header class="bg-gradient-to-r from-blue-700 to-blue-900 text-white py-16 shadow-lg relative overflow-hidden">
+        <!-- Dekorasi Latar Belakang -->
+        <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <div class="inline-flex items-center justify-center p-3 bg-white/20 rounded-full mb-4 backdrop-blur-sm">
+                <i data-lucide="salad" class="w-8 h-8 text-white"></i>
+            </div>
+            <h1 class="text-3xl md:text-5xl font-extrabold mb-4 tracking-tight">Satuan Pelayanan Pemenuhan Gizi</h1>
+            <p class="text-blue-100 text-lg md:text-xl max-w-2xl mx-auto font-light">
+                Daftar Kepala Satuan dan Lokasi Dapur Gizi se-Kecamatan Medan Johor, Kota Medan.
+            </p>
+        </div>
+    </header>
+
+    <!-- BAGIAN KONTEN UTAMA (Daftar Profil) -->
+    <main class="container mx-auto px-4 py-12 flex-grow">
+        <!-- Kontainer Grid untuk Kartu Profil (Akan diisi otomatis oleh JavaScript) -->
+        <div id="profil-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            <!-- Elemen kartu akan dimasukkan di sini oleh JavaScript -->
+        </div>
+    </main>
+
+    <!-- MODAL AI (Fitur Baru: Inspirasi Menu AI) -->
+    <div id="ai-modal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden transform scale-95 transition-transform duration-300 relative flex flex-col max-h-[90vh]">
+            <!-- Header Modal -->
+            <div class="bg-gradient-to-r from-indigo-600 to-purple-700 p-5 text-white flex justify-between items-center shrink-0">
+                <h3 class="text-xl font-bold flex items-center gap-2">
+                    <i data-lucide="sparkles" class="w-5 h-5 text-yellow-300"></i>
+                    Inspirasi Menu AI
+                </h3>
+                <button onclick="closeModal()" class="text-indigo-100 hover:text-white transition-colors">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <!-- Konten Modal -->
+            <div id="ai-modal-content" class="p-6 overflow-y-auto flex-grow prose prose-blue prose-sm md:prose-base">
+                <!-- Konten AI akan muncul di sini -->
+            </div>
+            <!-- Footer Modal -->
+            <div class="bg-slate-50 p-4 border-t border-slate-100 flex justify-end shrink-0">
+                <button onclick="closeModal()" class="px-5 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold rounded-xl transition-colors">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- BAGIAN FOOTER -->
+    <footer class="bg-white border-t border-slate-200 py-8 mt-auto text-center">
+        <p class="text-slate-500 text-sm">
+            &copy; 2026 Pemerintah Kota Medan - Kecamatan Medan Johor.<br>
+            Program Pemenuhan Gizi Masyarakat.
+        </p>
+    </footer>
+
+    <!-- BAGIAN JAVASCRIPT & DATA (Area yang paling mudah Anda edit) -->
+    <script>
+        /**
+         * =========================================================================
+         * AREA EDIT DATA (Ubah data di bawah ini sesuai kebutuhan Anda)
+         * =========================================================================
+         * Panduan:
+         * 1. Ubah teks di dalam tanda kutip ("...")
+         * 2. Untuk foto, masukkan link gambar. Jika kosong, akan pakai inisial nama otomatis.
+         * 3. 'mapsLink' adalah link dari Google Maps (Bagikan -> Salin Link).
+         */
+        const dataKepalaSatpel = [
+            {
+                nama: "Dr. Hj. Siti Aminah, M.Gizi",
+                nip: "19801212 200501 2 001",
+                jabatan: "Kepala Satpel Kelurahan Gedung Johor",
+                alamatDapur: "Dapur Gizi Gedung Johor, Jl. Karya Jaya No. 45, Kec. Medan Johor, Kota Medan",
+                mapsLink: "https://maps.app.goo.gl/contohLinkMaps1", // Ganti dengan link Google Maps asli
+                foto: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=90&w=500&h=500" 
+            },
+            {
+                nama: "Ahmad Fauzi, S.Gz, MPH",
+                nip: "19850324 201001 1 005",
+                jabatan: "Kepala Satpel Kelurahan Pangkalan Masyhur",
+                alamatDapur: "Sentra Gizi Pangkalan Masyhur, Jl. Karya Wisata Komplek Johor Indah, Medan Johor",
+                mapsLink: "https://maps.app.goo.gl/contohLinkMaps2",
+                foto: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=90&w=500&h=500"
+            },
+            {
+                nama: "Nurul Hidayati, SKM",
+                nip: "19880715 201212 2 003",
+                jabatan: "Kepala Satpel Kelurahan Titi Kuning",
+                alamatDapur: "Dapur Utama Titi Kuning, Jl. Brigjend Zein Hamid No. 112, Medan Johor",
+                mapsLink: "https://maps.app.goo.gl/contohLinkMaps3",
+                foto: "https://images.unsplash.com/photo-1594824436998-bc4b44dd8db8?auto=format&fit=crop&q=90&w=500&h=500"
+            },
+            {
+                nama: "dr. Budi Santoso",
+                nip: "19790909 200405 1 002",
+                jabatan: "Kepala Satpel Kelurahan Suka Maju",
+                alamatDapur: "Pos Gizi Terpadu Suka Maju, Jl. Suka Tirta Raya, Medan Johor",
+                mapsLink: "https://maps.app.goo.gl/contohLinkMaps4",
+                foto: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=90&w=500&h=500"
+            },
+            {
+                nama: "Diana Lestari, Amd.Gz",
+                nip: "19901122 201502 2 008",
+                jabatan: "Kepala Satpel Kelurahan Kedai Durian",
+                alamatDapur: "Dapur Sehat Kedai Durian, Jl. Sari Ujung, Medan Johor",
+                mapsLink: "https://maps.app.goo.gl/contohLinkMaps5",
+                foto: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=90&w=500&h=500"
+            },
+            {
+                nama: "Ir. Hendra Gunawan",
+                nip: "19750218 200003 1 004",
+                jabatan: "Kepala Satpel Kelurahan Kwala Bekala",
+                alamatDapur: "Pusat Gizi Kwala Bekala, Jl. Luku I No. 88, Medan Johor",
+                mapsLink: "https://maps.app.goo.gl/contohLinkMaps6",
+                foto: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=90&w=500&h=500"
+            }
+        ];
+        // =========================================================================
+        // AKHIR AREA EDIT DATA
+        // =========================================================================
+
+        /**
+         * Fungsi untuk merender kartu HTML berdasarkan data di atas
+         */
+        function renderProfilCards() {
+            const gridContainer = document.getElementById('profil-grid');
+            
+            dataKepalaSatpel.forEach(profil => {
+                // Membuat elemen card
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden card-hover flex flex-col h-full relative";
+                
+                // Gunakan placeholder inisial jika foto kosong atau gagal dimuat
+                const encodedName = encodeURIComponent(profil.nama);
+                const fallbackImage = `https://ui-avatars.com/api/?name=${encodedName}&background=1d4ed8&color=fff&size=500&bold=true`;
+                const finalPhoto = profil.foto ? profil.foto : fallbackImage;
+
+                card.innerHTML = `
+                    <!-- Header Kartu (Desain Gradasi Elegan) -->
+                    <div class="h-32 bg-gradient-to-br from-blue-700 via-blue-800 to-indigo-900 relative">
+                        <!-- Motif dekoratif transparan -->
+                        <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] mix-blend-overlay"></div>
+                    </div>
+                    
+                    <!-- Foto Profil (Tengah, Ukuran Besar, Bingkai Ganda) -->
+                    <div class="flex justify-center -mt-16 relative z-10 px-6">
+                        <div class="bg-white p-1.5 rounded-full shadow-lg">
+                            <img 
+                                src="${finalPhoto}" 
+                                alt="Foto ${profil.nama}" 
+                                class="w-28 h-28 md:w-32 md:h-32 rounded-full object-cover border-4 border-slate-50 shadow-inner bg-slate-100"
+                                onerror="this.src='${fallbackImage}'"
+                            >
+                        </div>
+                    </div>
+                    
+                    <!-- Detail Informasi (Teks Rata Tengah untuk Kesan Formal) -->
+                    <div class="pt-5 pb-6 px-6 flex-grow flex flex-col text-center">
+                        <h3 class="text-xl font-extrabold text-slate-800 leading-tight mb-1">${profil.nama}</h3>
+                        <p class="text-sm font-semibold text-indigo-600 mb-4">${profil.jabatan}</p>
+                        
+                        <!-- Badge NIP Elegan -->
+                        <div class="flex justify-center w-full mb-5">
+                            <div class="text-slate-600 text-sm flex items-center gap-2 bg-slate-50 py-1.5 px-4 rounded-full border border-slate-200 shadow-sm w-fit">
+                                <i data-lucide="badge-check" class="w-4 h-4 text-emerald-500"></i> 
+                                <span class="font-medium tracking-wide">NIP. ${profil.nip}</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Kotak Alamat -->
+                        <div class="bg-slate-50 rounded-xl p-4 mb-6 flex-grow border border-slate-100 text-left shadow-sm group hover:border-blue-200 transition-colors">
+                            <div class="flex items-start gap-3">
+                                <div class="bg-blue-100 p-2 rounded-lg text-blue-600 flex-shrink-0 mt-0.5 group-hover:bg-blue-500 group-hover:text-white transition-colors">
+                                    <i data-lucide="map-pin-house" class="w-4 h-4"></i>
+                                </div>
+                                <span class="text-sm text-slate-600 leading-relaxed pt-0.5">${profil.alamatDapur}</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Tombol Maps -->
+                        <a href="${profil.mapsLink}" target="_blank" rel="noopener noreferrer" 
+                           class="mt-auto flex items-center justify-center gap-2 w-full bg-white hover:bg-blue-50 text-blue-700 border border-blue-200 py-2.5 px-4 rounded-xl font-semibold transition-colors shadow-sm group">
+                            <i data-lucide="map" class="w-4 h-4 group-hover:scale-110 transition-transform text-blue-500"></i>
+                            Buka di Google Maps
+                        </a>
+                        
+                        <!-- Tombol AI Gemini -->
+                        <button onclick="generateAIMenu('${profil.nama}', '${profil.jabatan}')"
+                           class="mt-3 flex items-center justify-center gap-2 w-full bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white py-2.5 px-4 rounded-xl font-semibold transition-all shadow-md hover:shadow-lg group">
+                            ✨ Inspirasi Menu AI
+                        </button>
+                    </div>
+                `;
+                gridContainer.appendChild(card);
+            });
+
+            // Inisialisasi ikon dari library Lucide
+            lucide.createIcons();
+        }
+
+        // Jalankan fungsi saat halaman selesai dimuat
+        document.addEventListener('DOMContentLoaded', renderProfilCards);
+
+        /**
+         * =========================================================================
+         * FITUR KECERDASAN BUATAN (AI) GEMINI
+         * =========================================================================
+         */
+        const apiKey = ""; // API Key disediakan secara otomatis oleh environment
+        const modal = document.getElementById('ai-modal');
+        const modalContent = document.getElementById('ai-modal-content');
+
+        // Fungsi menampilkan modal
+        function openModal() {
+            modal.classList.remove('hidden');
+            // Sedikit delay agar efek transisi CSS berjalan lancar
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.querySelector('div').classList.remove('scale-95');
+                modal.querySelector('div').classList.add('scale-100');
+            }, 10);
+        }
+
+        // Fungsi menyembunyikan modal
+        function closeModal() {
+            modal.classList.add('opacity-0');
+            modal.querySelector('div').classList.remove('scale-100');
+            modal.querySelector('div').classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Fungsi memanggil Gemini API
+        async function generateAIMenu(nama, jabatan) {
+            openModal();
+            // Tampilkan animasi loading
+            modalContent.innerHTML = `
+                <div class="flex flex-col items-center justify-center py-12">
+                    <div class="animate-spin rounded-full h-14 w-14 border-t-2 border-b-2 border-indigo-600 mb-4"></div>
+                    <p class="text-slate-600 text-center font-medium animate-pulse">
+                        ✨ AI sedang meracik resep bergizi<br>bersama <strong>${nama}</strong>...
+                    </p>
+                </div>
+            `;
+
+            // Prompt untuk menginstruksikan AI
+            const prompt = `Buatkan 1 ide menu masakan super bergizi dan murah meriah yang direkomendasikan secara khusus oleh ${nama} (${jabatan}) untuk program pengentasan stunting balita di Medan. Sertakan: 1. Nama menu yang menarik, 2. Daftar bahan lokal (Medan/Sumut) yang murah dan mudah didapat, 3. Cara pembuatan singkat.`;
+            
+            // Instruksi sistem agar hasil AI berupa HTML siap pakai
+            const systemPrompt = "Anda adalah asisten ahli gizi profesional. Jawablah SELALU menggunakan format HTML murni (gunakan tag <h3>, <p>, <ul>, <li>, <strong>) agar langsung rapi saat dirender di website. Jangan gunakan format Markdown (seperti ** atau *). Gunakan bahasa Indonesia yang hangat, ramah, dan memotivasi khas budaya Medan.";
+
+            try {
+                const response = await fetchWithRetry(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: prompt }] }],
+                        systemInstruction: { parts: [{ text: systemPrompt }] }
+                    })
+                });
+
+                if (!response.ok) throw new Error('Gagal menghubungi server AI');
+
+                const data = await response.json();
+                const aiText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+                
+                if (aiText) {
+                    modalContent.innerHTML = aiText;
+                } else {
+                    throw new Error('Respons AI kosong');
+                }
+            } catch (error) {
+                console.error("Gemini API Error:", error);
+                modalContent.innerHTML = `
+                    <div class="text-center py-8 text-red-500 flex flex-col items-center">
+                        <i data-lucide="triangle-alert" class="w-16 h-16 mb-4"></i>
+                        <p class="font-bold text-lg">Mohon maaf, layanan AI sedang sibuk.</p>
+                        <p class="text-slate-600 mt-2">Silakan tutup jendela ini dan coba lagi beberapa saat lagi.</p>
+                    </div>
+                `;
+                lucide.createIcons();
+            }
+        }
+
+        // Fungsi fetch tangguh dengan mekanisme coba-lagi otomatis (Exponential Backoff)
+        async function fetchWithRetry(url, options, retries = 5) {
+            const delays = [1000, 2000, 4000, 8000, 16000];
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const response = await fetch(url, options);
+                    if (response.ok) return response;
+                    if (i === retries - 1) throw new Error(`Request failed with status ${response.status}`);
+                } catch (err) {
+                    if (i === retries - 1) throw err;
+                }
+                // Tunggu sebelum mencoba lagi
+                await new Promise(res => setTimeout(res, delays[i]));
+            }
+        }
+    </script>
+</body>
+</html>
